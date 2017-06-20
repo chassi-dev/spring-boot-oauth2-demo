@@ -1,0 +1,37 @@
+
+spring:
+  main:
+    show_banner: true
+    web_environment: true  
+  application:
+    name: oauth2-demo
+   
+greeting:
+  host: http://127.0.0.1
+  
+server:
+  port: 8091  #different that main value
+
+#Logging
+logging:
+  level:
+    ROOT: ERROR
+    com.saas: INFO
+
+security:
+  user:
+    name: test
+    password: test123
+    altName: test-fail
+  oauth2:
+    client:
+      clientId: spring-boot-demo
+      clientSecret:
+      userAuthorizationUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/auth
+      accessTokenUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/token
+      logoutUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
+    resource:
+      user-info-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/userinfo
+
+
+      
