@@ -49,6 +49,8 @@ curl -k http://localhost:8081/greeting
 {"timestamp":1497988846507,"status":401,"error":"Unauthorized","message":"Unauthorized","path":"/greeting"}
 
 
+mvn clean install will also run tests which require a running Keycloak server instance with seeded test data.
+
 
 
    
