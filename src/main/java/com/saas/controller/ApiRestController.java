@@ -1,7 +1,6 @@
 
 package com.saas.controller;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -11,17 +10,15 @@ import javax.servlet.http.HttpSession;
 
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,23 +35,50 @@ public class ApiRestController {
     @Autowired
     KeycloakOAuthUser oAuthUser;
     
-    @Value("${security.oauth2.client.logoutUri}")
-    private String logoutUri;
-
+    @Autowired
+    private Environment env;
     
     private static final String template = "Hello, %s!";
 
     private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-    	
+    //Various functions for getting auth token and refresh token from spring security objects
+    private AccessToken getAccessToken() {
     	
     	KeycloakAuthenticationToken authToken = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
     	KeycloakPrincipal kcPrincipal =  (KeycloakPrincipal) authToken.getPrincipal();
     	
         KeycloakSecurityContext ctxt = kcPrincipal.getKeycloakSecurityContext();
-        AccessToken token = (AccessToken) ctxt.getToken();
+        return  (AccessToken) ctxt.getToken();
+        
+    }
+    
+   
+   private String getAccessTokenString() {
+    	
+    	KeycloakAuthenticationToken authToken = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+    	KeycloakPrincipal kcPrincipal =  (KeycloakPrincipal) authToken.getPrincipal();
+    	
+        KeycloakSecurityContext ctxt = kcPrincipal.getKeycloakSecurityContext();
+        return  ctxt.getIdTokenString();
+        
+    }
+ 
+   private String getRefreshTokenString() {
+   	
+   	KeycloakAuthenticationToken authToken = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+   	KeycloakPrincipal kcPrincipal =  (KeycloakPrincipal) authToken.getPrincipal();
+   	
+   	RefreshableKeycloakSecurityContext ctxt = (RefreshableKeycloakSecurityContext) kcPrincipal.getKeycloakSecurityContext();
+       return ctxt.getRefreshToken();
+       
+   }
+
+   
+    @RequestMapping("/greeting")
+    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
+    	
+        AccessToken token = getAccessToken();
         
         String usersName = token.getName();
         
@@ -75,20 +99,5 @@ public class ApiRestController {
 
         return oAuthUser;
     }
-
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null){    
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		try {
-			response.sendRedirect(logoutUri);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "";
-	}
 
 }

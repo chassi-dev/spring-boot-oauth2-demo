@@ -20,13 +20,14 @@ security:
   user:
     name: test
     password: test123
+  loggedOutUri: /loggedout.html
   oauth2:
     client:
       clientId: spring-boot-demo
       clientSecret:
       userAuthorizationUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/auth
       accessTokenUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/token
-      logoutUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
+      logoutUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/logout
     resource:
       user-info-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/userinfo
       

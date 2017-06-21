@@ -23,6 +23,7 @@ security:
     name: test
     password: test123
     altName: test-fail
+  loggedOutUri: loggedout.html
   oauth2:
     client:
       clientId: spring-boot-demo
