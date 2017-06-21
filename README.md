@@ -6,14 +6,15 @@ The kecloak.json file and the application.yml file contain credentials tha have 
 
 Spring security requires role names to begin with ROLE_
 
-## Builds an executable jar file
+## Building an executable jar file
+
+'mvn clean install' will also run tests which require a running Keycloak server instance with seeded test data.
 
 java -jar target/spring-boot-oauth2-demo-1.0-SNAPSHOT.jar 
 
 From a browser, go to http://localhost:8080/
 
-
-## To override the port
+## To override the port at runtime
 
 java -jar target/spring-boot-oauth2-demo-1.0-SNAPSHOT.jar --server.port=8081
 
@@ -48,8 +49,6 @@ curl -k http://localhost:8081/greeting
 
 {"timestamp":1497988846507,"status":401,"error":"Unauthorized","message":"Unauthorized","path":"/greeting"}
 
-
-mvn clean install will also run tests which require a running Keycloak server instance with seeded test data.
 
 
 
