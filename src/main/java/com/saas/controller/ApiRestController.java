@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,4 +101,18 @@ public class ApiRestController {
         return oAuthUser;
     }
 
+    @RequestMapping("/services/userbff")
+    @ResponseBody
+    public String userbff(@RequestParam(value="errorCode", defaultValue="200") String errorCode, 
+    		HttpServletRequest request, HttpServletResponse response ) {
+   
+    	if ( errorCode.equalsIgnoreCase("200"))
+    		return String.format("{\"id\": \"a123-b34\", \"username\": \"Test User\"}");
+    	
+    	response.setStatus(Integer.parseInt(errorCode));
+    	return "";
+    }
+ 
+
+ 
 }

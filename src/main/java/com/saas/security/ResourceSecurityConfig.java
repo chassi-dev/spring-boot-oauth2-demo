@@ -59,7 +59,7 @@ public class ResourceSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         http
         	.authorizeRequests()
         	.antMatchers("/index.html", "/sso/login/**", "/logout", "/loggedout.html").permitAll()
-        	.antMatchers("/greeting/help").permitAll()
+        	.antMatchers("/greeting/help", "/services/**").permitAll()
         	//Spring Security REQUIRES role to be name ROLE_PROFILE in Keycloak!!!!
         	.antMatchers("/greeting/profile*").hasRole("PROFILE")  
         	.anyRequest().authenticated()
