@@ -1,8 +1,0 @@
-{
-  "realm" : "demo",
-  "realm-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuYyR/cxY8DDFc4UgoEqoDYBU1mARIbedNIU8HQDoSpFS2r9hD84bS/PU3r0ntDYBMWtDqTLXEQh4zGK+AHPf7dsM7BNOKyA71nl0SZF7AodSI+1sPy0CKtB2t+wqv7hPpOSJudFd2e0tvTbW5n8KI3yzDtLOmDnppX7QVxuQ7ULd8oGf3IDQLC9LBLOxLjZEaRRwoiqe3szpUf+w0S9wzhAaXz+n4L8oQiQtu7NhB+H44GuF9zSxH6IY3ZrgU2JoMKi3e8O5fWmGv4HrfYM9RO1NO8Fhlch5nGa5Ez5AdGr9JQl9FNwvcyVHY4b2C5B37aqMI38WXxkkIxZ/vazofwIDAQAB",
-  "auth-server-url" : "http://localhost:8080/auth",
-  "ssl-required" : "external",
-  "resource" : "spring-boot-demo",
-  "public-client" : true
-}

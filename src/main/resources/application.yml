@@ -31,4 +31,11 @@ security:
     resource:
       user-info-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/userinfo
       
+keycloak:
+  realm: demo
+  auth-server-url: http://localhost:8080/auth
+  ssl-required: external
+  resource: spring-boot-demo
+  public-client: true
+  
       

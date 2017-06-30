@@ -1,6 +1,7 @@
 package com.saas.security;
 
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
 import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
@@ -14,7 +15,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
@@ -40,6 +40,12 @@ public class ResourceSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     	return new KeycloakRestTemplate(keycloakClientRequestFactory); 
     }
         
+    
+    @Bean
+    public org.keycloak.adapters.KeycloakConfigResolver KeycloakConfigResolver(){
+       return new KeycloakSpringBootConfigResolver();
+    } 
+    
     /**
      * Defines the session authentication strategy.
      */
@@ -62,8 +68,8 @@ public class ResourceSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         	.antMatchers("/greeting/help", "/services/**").permitAll()
         	//Spring Security REQUIRES role to be name ROLE_PROFILE in Keycloak!!!!
         	.antMatchers("/greeting/profile*").hasRole("PROFILE")  
-        	.anyRequest().authenticated()
-        	.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        	.anyRequest().authenticated();
+        	//.and().exceptionHandling().accessDeniedHandler("/403");
 
     }
     
