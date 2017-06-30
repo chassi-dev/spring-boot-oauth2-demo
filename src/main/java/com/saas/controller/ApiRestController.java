@@ -98,12 +98,12 @@ public class ApiRestController {
     public KeycloakOAuthUser user(Principal principal) {
         oAuthUser.setPrincipal(principal);
 
-        return oAuthUser;
+        return oAuthUser;	
     }
 
     @RequestMapping("/services/userbff")
     @ResponseBody
-    public String userbff(@RequestParam(value="errorCode", defaultValue="200") String errorCode, 
+    public String userbff(@RequestParam(value="errorcode", defaultValue="200") String errorCode, 
     		HttpServletRequest request, HttpServletResponse response ) {
    
     	if ( errorCode.equalsIgnoreCase("200"))
@@ -113,6 +113,26 @@ public class ApiRestController {
     	return "";
     }
  
-
+    @RequestMapping("/services/twofactorreq")
+    @ResponseBody
+    public String twofactorreq(
+    		@RequestParam(value="username") String userName,
+    		@RequestParam(value="ipaddress") String ipaddress,
+    		@RequestParam(value="useragent", defaultValue="device") String useragent,
+    		@RequestParam(value="errorcode", defaultValue="200") String errorCode, 
+    		HttpServletRequest request, HttpServletResponse response ) {
+   
+    	if ( errorCode.equalsIgnoreCase("200")) {
+    		
+    		if ( ipaddress.equalsIgnoreCase("fail"))
+    			return String.format("{\"required\": false }");
+    			
+    		
+    		return String.format("{\"required\": true }");
+    	}
+    	
+    	response.setStatus(Integer.parseInt(errorCode));
+    	return "";
+    }
  
 }
