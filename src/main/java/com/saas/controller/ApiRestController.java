@@ -125,12 +125,12 @@ public class ApiRestController {
     	if ( errorCode.equalsIgnoreCase("200")) {
     		
     		if ( ipaddress.equalsIgnoreCase("fail"))
-    			return String.format("{\"required\": false }");
+    			return String.format("{\"required\": true }");
     			
     		
-    		return String.format("{\"required\": true }");
+    		return String.format("{\"required\": false }");
     	}
-    	
+
     	response.setStatus(Integer.parseInt(errorCode));
     	return "";
     }
