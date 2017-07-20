@@ -3,6 +3,7 @@ package com.saas.security;
 
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
+import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
 import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -14,9 +15,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import com.saas.security.CustomAccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +32,13 @@ public class ResourceSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(keycloakAuthenticationProvider());
+    	KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
+    	
+       	//By default, Spring Security REQUIRES roles defined in Keycloak to be prepended with ROLE_ 
+    	//so using a SimpleAuthorityMapper will negate this confusing convention. 
+    	 
+    	keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
+        auth.authenticationProvider(keycloakAuthenticationProvider);
     }
 
     @Autowired
@@ -55,6 +65,11 @@ public class ResourceSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
     
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
@@ -66,11 +81,10 @@ public class ResourceSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         	.authorizeRequests()
         	.antMatchers("/index.html", "/sso/login/**", "/logout", "/loggedout.html").permitAll()
         	.antMatchers("/greeting/help", "/services/**").permitAll()
-        	//Spring Security REQUIRES role to be name ROLE_PROFILE in Keycloak!!!!
-        	.antMatchers("/greeting/profile*").hasRole("PROFILE")  
-        	.anyRequest().authenticated();
-        	//.and().exceptionHandling().accessDeniedHandler("/403");
-
+        	.antMatchers("/greeting/profile*").hasRole("developer")  
+        	.anyRequest().authenticated()
+        	.and()
+        	.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
     
     

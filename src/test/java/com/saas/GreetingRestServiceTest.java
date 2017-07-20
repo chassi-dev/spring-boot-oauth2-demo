@@ -202,13 +202,13 @@ public class GreetingRestServiceTest {
         
 		Map<String, Object> user = (Map<String, Object>)responseMap.get("userDetail");
         String uname = (String)user.get("preferred_username");
-        assertEquals("test",uname);
+        assertEquals("test@chassi.com",uname);
 
         String name = (String)user.get("name");
         assertEquals("Test Test",name);
         
         String email = (String)user.get("email");
-        assertEquals("test@demo.com",email);
+        assertEquals("test@chassi.com",email);
     }
 
     

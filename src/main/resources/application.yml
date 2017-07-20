@@ -4,7 +4,7 @@ spring:
     show_banner: true
     web_environment: true  
   application:
-    name: oauth2-demo  
+    name: spring-boot-oauth2-demo  
 
 server:
   port: 8080  # override on command line as needed with --server.port=808x
@@ -17,29 +17,29 @@ logging:
 
 security:
   user:
-    name: test
+    name: test@chassi.com
     password: test123
   loggedOutUri: /loggedout.html
   oauth2:
     client:
       clientId: spring-boot-demo
       clientSecret:
-      userAuthorizationUri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/auth
-      accessTokenUri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/token
-      logoutUri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
-#      userAuthorizationUri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/auth
-#      accessTokenUri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/token
-#      logoutUri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
-#      userAuthorizationUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/auth
-#      accessTokenUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/token
-#      logoutUri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
+      userAuthorizationUri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/auth
+      accessTokenUri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/token
+      logoutUri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
+#      userAuthorizationUri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/auth
+#      accessTokenUri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/token
+#      logoutUri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
+#      userAuthorizationUri: http://localhost:8080/auth/realms/chassi/protocol/openid-connect/auth
+#      accessTokenUri: http://localhost:8080/auth/realms/chassi/protocol/openid-connect/token
+#      logoutUri: http://localhost:8080/auth/realms/chassi/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/
     resource:
-      user-info-uri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/userinfo
-#      user-info-uri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/demo/protocol/openid-connect/userinfo
-#      user-info-uri: http://localhost:8080/auth/realms/demo/protocol/openid-connect/userinfo
+      user-info-uri: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/userinfo
+#      user-info-uri: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/realms/chassi/protocol/openid-connect/userinfo
+#      user-info-uri: http://localhost:8080/auth/realms/chassi/protocol/openid-connect/userinfo
       
 keycloak:
-  realm: demo
+  realm: chassi
   auth-server-url: http://keycloak-ha-service-user-dev.router.dev1.saasforge.com/auth/
 #  auth-server-url: http://keycloak-ha-service-auth.router.dev1.saasforge.com/auth/
 #  auth-server-url: http://localhost:8080/auth/
