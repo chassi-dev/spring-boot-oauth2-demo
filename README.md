@@ -37,9 +37,9 @@ curl -k http://localhost:8081/greeting -H "Authorization: Bearer eyJhbGciOiJSU..
 
 curl -k http://localhost:8081/greeting/profile -H "Authorization: Bearer eyJhbGciOiJSU....."
 
-6. Should get response similar to: {"authority":[{"authority":"ROLE_PROFILE"},{"authority":"uma_authorization"}],"userDetail":{"family Name":"Test","name":"Test Test","email":"test@demo.com","preferred_username":"test","subject_id":"fffd3ccc-0fee-46bc-8d90-f63d05bcc3bb"}
+6. Should get response similar to: {"authority":[{"authority":"ROLE_developer"},{"authority":"uma_authorization"}],"userDetail":{"family Name":"Test","name":"Test Test","email":"test@demo.com","preferred_username":"test","subject_id":"fffd3ccc-0fee-46bc-8d90-f63d05bcc3bb"}
 
-7. If authenticated user does NOT have the ROLE_PROFILE assigned, then this command will fail with response similar to: 
+7. If authenticated user does NOT have the the role developer assigned, then this command will fail with response similar to: 
    
 {"error":"access_denied","error_description":"Access is denied"}
 
