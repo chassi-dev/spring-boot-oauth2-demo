@@ -33,7 +33,7 @@ curl -k http://localhost:8081/greeting -H "Authorization: Bearer eyJhbGciOiJSU..
 
 4. Should get response similar to: {"id":1,"content":"Hello, Test Test!"}
 
-5. If authenticated user has ROLE_PROFILE assigned, then this command will request the user's profile
+5. If authenticated user has developer assigned, then this command will request the user's profile
 
 curl -k http://localhost:8081/greeting/profile -H "Authorization: Bearer eyJhbGciOiJSU....."
 
