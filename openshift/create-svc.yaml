@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-oauth-demo 
+  labels:
+    component: spring-boot-oauth-demo 
+    app: spring-boot-oauth-demo 
+spec:
+  type: ClusterIP
+  selector:
+    name: spring-boot-oauth-demo 
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: http
+
